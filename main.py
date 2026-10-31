@@ -1,8 +1,9 @@
+#improvents, use dictionary as data structue
+#move into functions 
+#add clear for cleaner interface in temrinal
+#validate input check that it is correct
 
-#what datastructure to use? Start simple 
-#for now assume they are always in sync
-descriptions  = []
-expenses = []
+expense_items = {}
 
 while True:
     print("--------------------------------")
@@ -20,28 +21,29 @@ while True:
     if option == 4:
         break
     elif option == 1:
+
         description = input("Name of item: ")
         expense = int(input(f"{description} cost in SEK?: "))
 
-        descriptions.append(description)
-        expenses.append(expense)
+        expense_items[description] = expense
 
         print(f"\nItem added: {description} : {expense} SEK")
 
     elif option == 2:
         total = 0
         print("--------------------------------")
-        for i, desc in enumerate(descriptions):
-            print(f"{i+1}. {desc} \t\t {expenses[i]}")
-            total += expenses[i]
+
+        for i, (desc,exp) in enumerate(expense_items.items()):
+            print(f"{i+1}. {desc} \t\t {exp}")
+            total += exp
+
         print("--------------------------------")
         print(f"Total: \t\t\t {total}")
 
     elif option == 3:
         total = 0
-        for expense in expenses:
-            total += expense
-
+        for exp in expense_items.values():
+            total += exp
         print("--------------------------------")
         print(f"Total: \t\t\t {total}")
         print("--------------------------------")
