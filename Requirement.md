@@ -16,3 +16,12 @@ Welcome to Expense Tracker!
 4. Exit
 
 Choose an option:
+
+v0.3
+Function	Responsibility
+load_expenses()	Load expenses from JSON
+save_expenses()	Save expenses to JSON
+add_expense()	Collect and add an expense
+list_expenses()	Display all expenses
+calculate_total()	Calculate total expenses
+main()	Control the application
