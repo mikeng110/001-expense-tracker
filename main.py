@@ -4,37 +4,38 @@ import json
 expense_items = {}
 
 def load_expenses():
-    global expense_items
     if os.path.exists("expense.json"):
         with open("expense.json", 'r') as f:
             expense_items = json.load(f)
     else:
         expense_items = {}
 
+    return expense_items
 
-def save_expenses():
+
+def save_expenses(expense_items):
     with open ("expense.json",  'w') as f:
         json.dump(expense_items, f)
 
-def add_expense(desc, exp):
+def add_expense(expense_items, desc, exp):
     expense_items[desc] = exp
     print(f"\nItem added: {desc} : {exp} SEK")
 
-def list_expenses():
+def list_expenses(expense_items):
     print("--------------------------------")
 
     for i, (desc,exp) in enumerate(expense_items.items()):
         print(f"{i+1}. {desc} \t\t {exp}")
 
     print("--------------------------------")
-    print(f"Total: \t\t\t {calculate_total()}")
+    print(f"Total: \t\t\t {calculate_total(expense_items)}")
 
 
-def calculate_total():
+def calculate_total(expense_items):
     return sum(expense_items.values())
 
 def main():
-    load_expenses()
+    expense_items = load_expenses()
 
     while True:
         print("--------------------------------")
@@ -59,15 +60,15 @@ def main():
             description = input("Name of item: ")
             expense = int(input(f"{description} cost in SEK?: "))
 
-            add_expense(description, expense)
+            add_expense(expense_items, description, expense)
 
-            save_expenses()
+            save_expenses(expense_items)
         elif option == 2:
-            list_expenses()
+            list_expenses(expense_items)
 
         elif option == 3:
             print("--------------------------------")
-            print(f"Total: \t\t\t {calculate_total()}")
+            print(f"Total: \t\t\t {calculate_total(expense_items)}")
             print("--------------------------------")
 
         else:
