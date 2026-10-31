@@ -3,6 +3,12 @@
 #add clear for cleaner interface in temrinal
 #validate input check that it is correct
 
+#imrpovement, do not overwrite entire json each update
+
+#ability to save 
+import os 
+import json
+
 expense_items = {}
 
 while True:
@@ -13,6 +19,10 @@ while True:
     print("3. Show total")
     print("4. Exit")
     print("--------------------------------")
+
+    #load from file 
+    with open("expense.json", 'r') as f:
+        expense_items = json.load(f)
 
     #todo validate input
     option = int(input("Choose an option: "))
@@ -28,6 +38,11 @@ while True:
         expense_items[description] = expense
 
         print(f"\nItem added: {description} : {expense} SEK")
+
+        #save to file 
+
+        with open ("expense.json",  'w') as f:
+            json.dump(expense_items, f)
 
     elif option == 2:
         total = 0
@@ -47,10 +62,6 @@ while True:
         print("--------------------------------")
         print(f"Total: \t\t\t {total}")
         print("--------------------------------")
-        
-
-    print("\n")
-
     
 
 
