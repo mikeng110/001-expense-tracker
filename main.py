@@ -1,7 +1,40 @@
 import os 
 import json
 
+#list of dictionary instead, how does that affect file?
 expense_items = {}
+
+#takes dict format where identical keys store a list instead of number
+#convert dict into a list of dictionary
+#given key_str, val_str the name of dictionary keys
+def list_to_dict(l, key_str, val_str):
+    d = {}
+    for item in l:
+        key = item[key_str]
+        val = item[val_str]
+
+        if key in d:
+            if not isinstance(d[key], list):
+                d[key] = [d[key]]
+            
+            d[key].append(val)
+        else:
+            d[key] = val
+     
+    return d
+
+def dict_to_list(d, key_str, val_str):
+    l = []
+    for key, val in d.items():
+        if isinstance(val, list):
+            for v in val:
+                l.append({key_str:key, val_str:v})
+        else:
+            l.append({key_str:key, val_str:val})
+
+    return l
+
+
 
 def load_expenses():
     if os.path.exists("expense.json"):
@@ -36,6 +69,20 @@ def calculate_total(expense_items):
 
 def main():
     expense_items = load_expenses()
+
+    #testing conversion out
+    l = [
+    {"description": "Lunch", "amount": 120},
+    {"description": "Groceries", "amount": 450},
+    {"description": "Lunch", "amount": 150}
+    ]
+
+    d = list_to_dict(l, "description", "amount")
+
+    l2 = dict_to_list(d, "description", "amount" )
+
+    #l = dict_to_list(expense_items, "")
+
 
     while True:
         print("--------------------------------")
