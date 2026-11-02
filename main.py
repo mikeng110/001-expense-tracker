@@ -54,18 +54,29 @@ def main():
         if option == 5: #Exit
             break
         elif option == 1: 
-
             description = input("Name of item: ")
+
+            if description.strip() == "": #blank name
+                print("An item require a name")
+                continue
+
             try:
                 expense = int(input(f"{description} cost in SEK?: "))
             except ValueError:
-                print("Invalid input, cost is a number\n")
+                print("Invalid input, cost is a positive number\n")
+                continue
+
+            if expense < 0:
+                print("Invalid input, cost is a positive number\n")
                 continue
 
             add_expense(expense_items, description, expense)
 
             save_expenses(expense_items)
         elif option == 2:
+            if not expense_items:
+                print("no items to be listed")
+                continue
             list_expenses(expense_items)
 
         elif option == 3:
