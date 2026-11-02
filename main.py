@@ -29,7 +29,7 @@ def list_expenses(expense_items):
 
 
 def calculate_total(expense_items):
-    return sum([item['Amount'] for item in expense_items])
+    return sum(item['Amount'] for item in expense_items)
 
 def main():
     expense_items = load_expenses()
@@ -40,7 +40,8 @@ def main():
         print("1. Add expense")
         print("2. List expenses")
         print("3. Show total")
-        print("4. Exit")
+        print("4. Delete expense")
+        print("5. Exit")
         print("--------------------------------")
 
         try:
@@ -50,12 +51,16 @@ def main():
 
         print("\n")
 
-        if option == 4: #Exit
+        if option == 5: #Exit
             break
         elif option == 1: 
 
             description = input("Name of item: ")
-            expense = int(input(f"{description} cost in SEK?: "))
+            try:
+                expense = int(input(f"{description} cost in SEK?: "))
+            except ValueError:
+                print("Invalid input, cost is a number\n")
+                continue
 
             add_expense(expense_items, description, expense)
 
@@ -67,6 +72,25 @@ def main():
             print("--------------------------------")
             print(f"Total: \t\t\t {calculate_total(expense_items)}")
             print("--------------------------------")
+
+        elif option == 4:
+
+            if not expense_items:
+                print("no items to be deleted")
+                continue
+            list_expenses(expense_items)
+            try:
+                option = int(input("Select item to delete: "))
+
+            except ValueError:
+                print("Invalid input, expected integer")
+                continue
+            if option > 0 and option <= len(expense_items):
+                deleted = expense_items.pop(option -1)
+                save_expenses(expense_items)
+                print(f"Deleted {deleted["Description"]}")
+            else:
+                print("Invalid Selection")
 
         else:
             print("Invalid option")
