@@ -17,11 +17,18 @@ Welcome to Expense Tracker!
 
 Choose an option:
 
-v0.3
-Function	Responsibility
-load_expenses()	Load expenses from JSON
-save_expenses()	Save expenses to JSON
-add_expense()	Collect and add an expense
-list_expenses()	Display all expenses
-calculate_total()	Calculate total expenses
-main()	Control the application
+
+
+YOUR EXPENSES
+--------------------------------
+1. Lunch       120.00 SEK
+2. Groceries   450.00 SEK
+--------------------------------
+Total:         570.00 SEK
+
+
+v0.2
+When the application starts, load previously saved expenses.
+When someone adds an expense, save it.
+When the application exits, expenses should still exist.
+Use JSON for storage.
